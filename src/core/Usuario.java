@@ -259,7 +259,7 @@ public class Usuario implements Comparable<Usuario> {
 	 * Metodo que retorna o conteudo de um Post do mural de um Usuario.
 	 * 
 	 * @param post
-	 *            Indice do Post requisitado.
+	 *            Inteiro que indica o indice do Post.
 	 * @return Retorna o toString de um Post.
 	 * @throws RequisicaoInvalidaException
 	 *             Excessao lancada caso nao exista post com o indice passado
@@ -302,25 +302,65 @@ public class Usuario implements Comparable<Usuario> {
 			throw new RequisicaoInvalidaException();
 		}
 	}
-
+	
+	/**
+	 * Metodo que retorna o conteudo de um determinado Post.
+	 * 
+	 * @param indice
+	 * 			Inteiro que indica qual o conteudo do Post.
+	 * @param post
+	 * 			Inteiro que indica o indice do Post.
+	 * @return	Retorna a string do conteudo pelo metodo.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada caso nao exista post com o indice passado
+	 *          como parametro ou quando o indice e menor que zero.
+	 * @throws IndiceConteudoPostInvalido
+	 * 			Excessao lancada quando o indice nao existe.
+	 */
 	public String getConteudoPost(int indice, int post) throws RequisicaoInvalidaException, IndiceConteudoPostInvalido {
 		if (post < 0 || indice < 0)
 			throw new RequisicaoInvalidaException(new IndiceMenorQueZeroException());
 		return mural.get(post).getConteudo(indice);
 	}
-
+	
+	/**
+	 * Metodo que adiciona o Usuario na lista de solicitacao de amizades.
+	 * 
+	 * @param usuarioLogado
+	 * 			Usuario que sera adicionado na lista de solicitacao de amizade.
+	 * 			
+	 */
 	public void adicionaSolicitacaoDeAmizade(Usuario usuarioLogado) {
 		solicitacoesDeAmizade.add(usuarioLogado);
 	}
-
+	
+	/**
+	 * Metodo que adiciona novas notificacoes.
+	 * 
+	 * @param novaNotificacao
+	 * 			String que sera adicionada na lista de novas notificacoes.
+	 */
 	public void adicionaNotificacao(String novaNotificacao) {
 		notificacoes.add(novaNotificacao);
 	}
 
+	/**
+	 * Metodo que retorna a quantidade de notificacoes.
+	 * 
+	 * @return Retorna um inteiro do tamanho da lista pelo metodo.
+	 */
 	public int getNotificacoes() {
 		return notificacoes.size();
 	}
-
+	
+	/**
+	 * Metodo que remove a notificacao para capturar a seguinte e retorna-la.
+	 * 
+	 * @return Retorna o atributo com a string da notificacao.
+	 * 
+	 * @throws NaoHaNotificacoesException
+	 * 			Excessao lancada quando a lista de notificacoes esta vazia.
+	 */
 	public String getNextNotificacao() throws NaoHaNotificacoesException {
 		if (notificacoes.isEmpty())
 			throw new NaoHaNotificacoesException();
@@ -328,7 +368,15 @@ public class Usuario implements Comparable<Usuario> {
 		notificacoes.remove(0);
 		return notificacao;
 	}
-
+	
+	/**
+	 * Metodo que remove o usuario selecionado da lista de soliciatacoes de amizades.
+	 * 
+	 * @param usuario
+	 * 			Usuario que sera dado como parametro para ser removido.
+	 * @throws SolicitacaoInexistenteException
+	 * 			Excessao lancada quando o usuario nao solicitou amizade.
+	 */
 	public void rejeitaAmizade(Usuario usuario) throws SolicitacaoInexistenteException {
 		if (naoTemNotificacaoDe(usuario))
 			throw new SolicitacaoInexistenteException(usuario.getNome());
@@ -340,11 +388,24 @@ public class Usuario implements Comparable<Usuario> {
 			return false;
 		return true;
 	}
-
+	
+	/**
+	 * Metodo que retorna a quantidade de amigos.
+	 * 
+	 * @return Retorna o tamanho da lista de amigos pelo metodo.
+	 */
 	public int getQtdAmigos() {
 		return amigos.size();
 	}
 
+	/**
+	 * Metodo que adiciona amigo e o remove das solicitacoes de amizade.
+	 * 
+	 * @param usuario
+	 * 			Usuario dado como parametro para ser adicionado como amigo.
+	 * @throws SolicitacaoInexistenteException
+	 * 			Excessao lancada quando o usuario nao solicitou amizade.
+	 */
 	public void aceitaAmizade(Usuario usuario) throws SolicitacaoInexistenteException {
 		if (naoTemNotificacaoDe(usuario))
 			throw new SolicitacaoInexistenteException(usuario.getNome());
@@ -355,12 +416,31 @@ public class Usuario implements Comparable<Usuario> {
 	private void adicionaAmigo(Usuario usuario) {
 		amigos.add(usuario);
 	}
-
+	
+	/**
+	 * Metodo que verifica se a amizade nao existe.
+	 * 
+	 * @param usuario
+	 * 			Usuario dado como parametro para verificar se ele nao está na lista de amigos.
+	 * @throws NaoTemAmizadeException
+	 * 			Excessao lancada quando o usuario nao esta na lista de amigos.
+	 */
 	public void verificaAmizade(Usuario usuario) throws NaoTemAmizadeException {
 		if (!amigos.contains(usuario))
 			throw new NaoTemAmizadeException(usuario);
 	}
-
+	
+	/**
+	 * Metodo que retorna o Post do mural de um Usuario.
+	 * 
+	 * @param post
+	 * 			Inteiro que indica o indice do Post.
+	 * @return Retorna o post atraves do metodo.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada quando o indice eh menor que zero.
+	 * @throws PostTalNaoExisteException
+	 * 			Excessao lancada quando o inteiro dado como parametro eh maior que a quantidade de posts
+	 */
 	public Post buscaPost(int post) throws RequisicaoInvalidaException, PostTalNaoExisteException {
 		if (post < 0)
 			throw new RequisicaoInvalidaException(new IndiceMenorQueZeroException());
@@ -372,23 +452,57 @@ public class Usuario implements Comparable<Usuario> {
 	private int getQuantidadeDePosts() {
 		return mural.size();
 	}
-
+	
+	/**
+	 * Metodo que adiciona o usuario na lista de amigos.
+	 * 
+	 * @param usuario
+	 * 			Usuario dado como parametro que sera adicionado na lista de amigos.
+	 */
 	public void adionaAmigo(Usuario usuario) {
 		amigos.add(usuario);
 	}
-
+	
+	/**
+	 * Metodo que remove usuario da lista de amigos.
+	 * 
+	 * @param usuarioParaRemover
+	 * 			Usuario dado como parametro que sera removido da lista de amigos.
+	 */
 	public void removeAmigo(Usuario usuarioParaRemover) {
 		amigos.remove(usuarioParaRemover);
 	}
-
+	
+	/**
+	 * Metodo para curtir o post com variacao do tipo de usuario.
+	 * 
+	 * @param post
+	 * 			Post dado como parametro que sera curtido.
+	 * @param usuarioAmigo
+	 * 			Usuario dado como parametro que tera o post curtido.
+	 */
 	public void curtirPost(Post post, Usuario usuarioAmigo) {
 		tipoDeUsuario.curtirPost(post, usuarioAmigo);
 	}
-
+	
+	/**
+	 * Metodo para rejeitar o post com variacao do tipo de usuario.
+	 * 
+	 * @param post
+	 * 			Post dado como parametro que sera rejeitado
+	 * @param usuarioAmigo
+	 * 			Usuario dado como parametro que tera o post rejeitado.
+	 */
 	public void rejeitarPost(Post post, Usuario usuarioAmigo) {
 		tipoDeUsuario.rejeitarPost(post, usuarioAmigo);
 	}
-
+	
+	/**
+	 * Metodo que adiciona a popularidade a partir da quantidade de popularidades criara um novo tipo de Usuario.
+	 * 
+	 * @param pops
+	 * 			Inteiro dado como parametro que sera somado no atributo para saber qual objeto criar.
+	 */
 	public void adicionaPops(int pops) { // Usar um singleton para evitar varios
 											// objetos criados.
 		popularidade += pops;
@@ -399,15 +513,31 @@ public class Usuario implements Comparable<Usuario> {
 		else
 			tipoDeUsuario = new IconePop();
 	}
-
+	
+	/**
+	 * Metodo que retorna o nome do tipo de Usuario
+	 * 
+	 * @return Retorna o toString do tipo de Usuario.
+	 */
 	public String getPopularidade() {
 		return tipoDeUsuario.toString();
 	}
-
+	
+	/**
+	 * Metodo que retorna a quantidade de pops.
+	 * 
+	 * @return Retorna o atributo de popularidade.
+	 */
 	public int getPops() {
 		return this.popularidade;
 	}
-
+	
+	/**
+	 * Metodo que diminue em inteiro uma determinada quantidade de popularidade.
+	 * 
+	 * @param valor
+	 * 			Inteiro dado como parametro para este valor ser diminuido do atributo de popularidade.
+	 */
 	public void removePops(int valor) {
 		popularidade -= valor;
 	}
@@ -430,7 +560,12 @@ public class Usuario implements Comparable<Usuario> {
 	public String toString() {
 		return this.nome;
 	}
-
+	
+	/**
+	 * Metodo que retorna uma lista com todos os hashtags.
+	 * 
+	 * @return Retorna a lista de hashtags.
+	 */
 	public List<String> getHashtags() {
 		List<String> hashtags = new ArrayList<>();
 		for (Post post : mural) {

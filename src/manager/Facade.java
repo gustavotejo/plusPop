@@ -210,98 +210,324 @@ public class Facade {
 		if (controller.isUsuarioLogado())
 			throw new FechaSistemaException(new UsuarioAindaLogadoException());
 	}
-
+	
+	/**
+	 * Metodo que cria um Post com uma mensagem e uma data.
+	 * 
+	 * @param mensagem
+	 * 			String que indica qual mensagem sera criada.
+	 * @param data
+	 * 			String que indica qual a data sera criada.
+	 * @throws CriaPostException
+	 * 			Excessao lancada quando o post nao for criado.
+	 */
 	public void criaPost(String mensagem, String data) throws CriaPostException {
 		controller.criaPost(mensagem, data);
 	}
-
+	
+	/**
+	 * Metodo que retorna o Post.
+	 * 
+	 * @param post
+	 * 			Inteiro que indica o indice do post.
+	 * @return Retorna o Post atraves do metodo.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada quando a requisicao eh invalida.
+	 */
 	public String getPost(int post) throws RequisicaoInvalidaException {
 		return controller.getPost(post);
 	}
-
+	
+	/**
+	 * Retorna o Post a partir dos parametros.
+	 * 
+	 * @param atributo
+	 * 			String que indica o atributo.
+	 * @param post
+	 * 			Inteiro que indica o indice do Post.
+	 * @return Retorna um Post atraves dos parametros.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada quando a requisicao eh invalida.
+	 */
 	public String getPost(String atributo, int post) throws RequisicaoInvalidaException {
 		return controller.getPost(atributo, post);
 	}
-
+	
+	/**
+	 * Retorna o conteudo do post.
+	 * 
+	 * @param indice
+	 * 			Inteiro que indica o conteudo.
+	 * @param post
+	 * 			Inteiro para indicar o indice do post.
+	 * @return	Retorna uma string atraves do metodo que indica o conteudo do post.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada quando a requisicao eh invalida
+	 * @throws IndiceConteudoPostInvalido
+	 * 			Excessao lancada quando o indice do post eh invalido
+	 */
 	public String getConteudoPost(int indice, int post) throws RequisicaoInvalidaException, IndiceConteudoPostInvalido {
 		return controller.getConteudoPost(indice, post);
 	}
-
+	
+	/**
+	 * Metodo que adiciona um amigo.
+	 * 
+	 * @param usuario
+	 * 			String do Usuario que sera adicionado.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum Usuario esta logado
+	 * @throws UsuarioNaoCadastradoException
+	 * 			Excessao lancada quando nao existe usuarios cadastrados
+	 */
 	public void adicionaAmigo(String usuario) throws NenhumUsuarioLogadoException, UsuarioNaoCadastradoException {
 		controller.adicionaAmigo(usuario);
 	}
-
+	
+	/**
+	 * Metodo que retorna as notificacoes.
+	 * 
+	 * @return Retorna as notificacoes.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhuma usuario esta logado
+	 */
 	public int getNotificacoes() throws NenhumUsuarioLogadoException {
 		return controller.getNotificacoes();
 	}
-
+	
+	/**
+	 * Retorna a notificacao seguinte.
+	 * 
+	 * @return Retorna a proxima notificacao atraves do metodo.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 * @throws NaoHaNotificacoesException
+	 * 			Excessao lancada quando nao existe notificacoes.
+	 */
 	public String getNextNotificacao() throws NenhumUsuarioLogadoException, NaoHaNotificacoesException {
 		return controller.getNextNotificacao();
 	}
-
+	
+	/**
+	 * Metodo que rejeita a amizade.
+	 * 
+	 * @param usuario
+	 * 			String do usuario que sera rejeitada a amizade.
+	 * @throws UsuarioNaoCadastradoException
+	 * 			Excessao lancada quando o usuario nao esta cadastrado.
+	 * @throws SolicitacaoInexistenteException
+	 * 			Excessao lancada quando o usuario nao solicitou amizade.
+	 */
 	public void rejeitaAmizade(String usuario) throws UsuarioNaoCadastradoException, SolicitacaoInexistenteException {
 		controller.rejeitaAmizade(usuario);
 	}
-
+	
+	/**
+	 * Retorna a quantidade de amigos.
+	 * 
+	 * @return Retorna o metodo que captura a quantidade de amigos.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 */
 	public int getQtdAmigos() throws NenhumUsuarioLogadoException {
 		return controller.getQtdAmigos();
 	}
-
+	
+	/**
+	 * Metodo que aceita a amizade.
+	 * 
+	 * @param usuario
+	 * 			String do Usuario que indica qual sera aceitado.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 * @throws UsuarioNaoCadastradoException
+	 * 			Excessao lancada quando o usuario esta cadastrado.
+	 * @throws SolicitacaoInexistenteException
+	 * 			Excessao lancada quando o usuario nao soliciou amizade.
+	 */
 	public void aceitaAmizade(String usuario)
 			throws NenhumUsuarioLogadoException, UsuarioNaoCadastradoException, SolicitacaoInexistenteException {
 		controller.aceitaAmizade(usuario);
 	}
 
+	/**
+	 * Metodo para curtir um post.
+	 * 
+	 * @param amigo
+	 * 			String do amigo que tera o Post curtido.
+	 * @param post
+	 * 			Inteiro que indica o indice do Post.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 * @throws UsuarioNaoCadastradoException
+	 * 			Excessao lancada quando o usuario esta cadastrado.
+	 * @throws NaoTemAmizadeException
+	 * 			Excessao lancada quando o usuario nao tem esta amizade.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada quando a requisicao eh invalida.
+	 * @throws PostTalNaoExisteException
+	 * 			Excessao lancada quando o post nao existe.
+	 */
 	public void curtirPost(String amigo, int post) throws NenhumUsuarioLogadoException, UsuarioNaoCadastradoException,
 			NaoTemAmizadeException, RequisicaoInvalidaException, PostTalNaoExisteException {
 		controller.curtirPost(amigo, post);
 	}
-
+	
+	/**
+	 * Metodo que rejeita um post.
+	 * 
+	 * @param amigo
+	 * 			String do amigo que tera o post rejeitado.
+	 * @param post
+	 * 			Inteiro que indica qual post sera rejeitado.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 * @throws UsuarioNaoCadastradoException
+	 * 			Excessao lancada quando o usuario nao esta cadastrado.
+	 * @throws NaoTemAmizadeException
+	 * 			Excessao lancada quando o usuario nao tem esta amizade.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada quando a requisicao eh invalida
+	 * @throws PostTalNaoExisteException
+	 * 			Excessao lancada quando o post nao existe.
+	 */
 	public void rejeitarPost(String amigo, int post) throws NenhumUsuarioLogadoException, UsuarioNaoCadastradoException,
 			NaoTemAmizadeException, RequisicaoInvalidaException, PostTalNaoExisteException {
 		controller.rejeitarPost(amigo, post);
 	}
-
+	
+	/**
+	 * Metodo que remove um amigo.
+	 * 
+	 * @param usuario
+	 * 			String do usuario que sera removido.
+	 * @throws UsuarioNaoCadastradoException
+	 * 			Excessao lancada quando o usuario nao esta cadastrado.
+	 * @throws NaoTemAmizadeException
+	 * 			Excessao lancada quando nao tem esta amizade.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 */
 	public void removeAmigo(String usuario)
 			throws UsuarioNaoCadastradoException, NaoTemAmizadeException, NenhumUsuarioLogadoException {
 		controller.removeAmigo(usuario);
 	}
 
+	/**
+	 * Metodo que adiciona Pops
+	 * 
+	 * @param pops
+	 * 			Inteiro que indica a quantidade de pops que sera adicionada.
+	 */
 	public void adicionaPops(int pops) {
 		controller.adicionaPops(pops);
 	}
-
+	
+	/**
+	 * Retorna a popularidade.
+	 * 
+	 * @return Retorna a popularidade atraves do metodo
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 */
 	public String getPopularidade() throws NenhumUsuarioLogadoException {
 		return controller.getPopularidade();
 	}
-
+	
+	/**
+	 * Metodo que retorna a quantidade de pops em um determinado post.
+	 * 
+	 * @param post
+	 * 			Inteiro que indica o post que sera analisado.
+	 * @return Retorna a quantidade de pops do post através do metodo.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada quando a requisicao eh invalida
+	 * @throws PostTalNaoExisteException
+	 * 			Excessao lancada quando o post nao existe.
+	 */
 	public int getPopsPost(int post)
 			throws NenhumUsuarioLogadoException, RequisicaoInvalidaException, PostTalNaoExisteException {
 		return controller.getPopsPost(post);
 	}
-
+	
+	/**
+	 * Metodo que retorna a quantidade de curtidas de um determinado Post.
+	 * 
+	 * @param post
+	 * 			Inteiro que indica o indice do post.
+	 * @return Retorna a quantidade de curtidas atraves do metodo
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada quando a requisicao eh invalida
+	 * @throws PostTalNaoExisteException
+	 * 			Excessao lancada quando o post nao existe.
+	 */
 	public int qtdCurtidasDePost(int post)
 			throws NenhumUsuarioLogadoException, RequisicaoInvalidaException, PostTalNaoExisteException {
 		return controller.qtdCurtidasDePost(post);
 	}
-
+	
+	/**
+	 * Metodo que retorna a quantidade de rejeicoes de um Post.
+	 * 
+	 * @param post
+	 * 			Inteiro que indica qual o post sera analisado.
+	 * @return Retorna a quantidade de rejeicoes de um post pelo metodo.
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 * @throws RequisicaoInvalidaException
+	 * 			Excessao lancada quando a requisicao eh invalida
+	 * @throws PostTalNaoExisteException
+	 * 			Excessao lancada quando o post nao existe.
+	 */
 	public int qtdRejeicoesDePost(int post)
 			throws NenhumUsuarioLogadoException, RequisicaoInvalidaException, PostTalNaoExisteException {
 		return controller.qtdRejeicoesDePost(post);
 	}
-
+	
+	/**
+	 * Metodo que retorna a popularidade de um Usuario
+	 * 
+	 * @param usuario
+	 * 			String do usario que tera sua popularidade retornada.
+	 * @return Retorna a popularidade do usuario atraves do metodo.
+	 * @throws ConsultaDePopsException
+	 * 			Excessao lancada quando da erro na consulta de pops
+	 * @throws UsuarioNaoCadastradoException
+	 * 			Excessao lancada quando o usuario nao esta cadastrado.
+	 */
 	public int getPopsUsuario(String usuario) throws ConsultaDePopsException, UsuarioNaoCadastradoException {
 		return controller.getPopsUsuario(usuario);
 	}
-
+	
+	/**
+	 * Metodo que retorna a Popularidade.
+	 * 
+	 * @return Retorna a popularidade pelo metodo
+	 * @throws NenhumUsuarioLogadoException
+	 * 			Excessao lancada quando nenhum usuario esta logado.
+	 */
 	public int getPopsUsuario() throws NenhumUsuarioLogadoException {
 		return controller.getPopsUsuario();
 	}
-
+	
+	/**
+	 * Metodo que atualiza o Ranking
+	 * 
+	 * @return Retorna o metodo para atualizar o ranking
+	 */
 	public String atualizaRanking() {
 		return controller.atualizaRanking();
 	}
-
+	
+	/**
+	 * Metodo que atualiza o Trending Topics.
+	 * 
+	 * @return Retorna o metodo para atualizar o Trending Topics.
+	 */
 	public String atualizaTrendingTopics() {
 		return controller.atualizaTrendingTopics();
 	}
